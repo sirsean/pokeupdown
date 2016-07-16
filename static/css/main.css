@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    background-color: #E8D78A;
+    color: white;
+}
+
+hr {
+    border: 1px solid #D8D8D8;
+}
+
+a {
+    color: white;
+    cursor: pointer;
+}
+
+button {
+    padding: 8px;
+    margin: 4px;
+    font-size: 16pt;
+    background-color: #FDB632;
+    border-radius: 5px;
+    border: none;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.durations {
+}
+
+.duration-cell {
+    height: 100vh;
+    margin: 2px;
+}
+
+.duration-cell.fast {
+    background-color: #30AF04;
+}
+
+.duration-cell.slow {
+    background-color: #CEF13D;
+}
+
+.duration-cell.down {
+    background-color: #EB421C;
+}
