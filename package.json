@@ -21,10 +21,12 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babelify": "^7.2.0",
+    "moment": "^2.14.1",
     "react": "^15.0.0",
     "react-addons-pure-render-mixin": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-redux": "^4.4.0",
+    "react-time": "^4.2.0",
     "redux": "^3.3.1",
     "superagent": "^1.8.0"
   },

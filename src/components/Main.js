@@ -1,6 +1,7 @@
 import React from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 import {connect} from "react-redux";
+import Time from "react-time";
 var Actions = require("../actions/Actions.js");
 
 function ratios(durations) {
@@ -91,7 +92,7 @@ const Status = React.createClass({
                 </div>
                 <div className="row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <span>Pokemon Go is currently</span>
+                        <span>Pokémon Go is currently</span>
                     </div>
                 </div>
                 <div className="status-line row middle-xs center-xs">
@@ -101,7 +102,7 @@ const Status = React.createClass({
                 </div>
                 <div className="row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <span>as of {lastChecked}</span>
+                        <span>as of <Time value={status.lastChecked} format="MMM DD, h:mm a" /></span>
                     </div>
                 </div>
                 <div className="row middle-xs center-xs">
