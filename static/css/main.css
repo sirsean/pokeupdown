@@ -1,9 +1,8 @@
 body {
     margin: 0;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Varela Round", sans-serif;
     background-color: #EDEDF4;
-    color: black;
-    font-size: 18pt;
+    color: white;
 }
 
 hr {
@@ -18,14 +17,47 @@ a {
 button {
     padding: 16px;
     margin: 8px;
-    font-size: 24pt;
+    font-size: 48pt;
     background: none;
     border-radius: 5px;
     border: none;
+    color: white;
 }
 
 .row {
-    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.background-up {
+    background-color: #4DAD5B;
+    height: 100vh;
+}
+
+.background-down {
+    background-color: #E3350D;
+    height: 100vh;
+}
+
+.status-img img {
+    margin-top: 100px;
+    width: 60%;
+    max-width: 256px;
+}
+
+.status-text {
+    margin-top: 30px;
+    font-size: 1.625em;
+    line-height: 2em;
+}
+
+.status-date {
+    font-size: 0.875em;
+    line-height: 1.125em;
+}
+
+.status-refresh {
+    margin-top: 30px;
 }
 
 .thumb {

@@ -30,8 +30,17 @@ function ratios(durations) {
 }
 
 function upStreak(durations) {
-    for (let i=0; i < durations.length / 2; i++) {
+    for (let i=0; i < durations.length / 3; i++) {
         if (durations[i] > 1.2) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function downStreak(durations) {
+    for (let i=0; i < durations.length / 4; i++) {
+        if (durations[i] < 2) {
             return false;
         }
     }
@@ -56,56 +65,38 @@ const Status = React.createClass({
 
         if (upStreak(durations)) {
             currently = "up";
+        } else if (downStreak(durations)) {
+            currently = "down";
         } else {
             let [fastRatio, slowRatio, downRatio] = ratios(durations);
-            if (fastRatio > 0.75) {
+            if (fastRatio > 0.85) {
                 currently = "up";
-            } else if (downRatio > 0.4) {
-                currently = "down";
             } else {
-                currently = "slow";
+                currently = "down";
             }
         }
 
-        let thumbClasses = ["thumb", "fa", "fa-6", currently];
-        if (currently == "up") {
-            thumbClasses.push("fa-thumbs-up");
-        } else if (currently == "slow") {
-            thumbClasses.push("fa-thumbs-up");
-        } else if (currently == "down") {
-            thumbClasses.push("fa-thumbs-down");
-        }
-
-        let lastChecked = status.lastChecked.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        });
+        let mainClass = "background-" + currently;
+        let imgSrc = "/img/" + currently + ".png";
 
         return (
-            <div>
-                <div className="row middle-xs center-xs">
+            <div className={mainClass}>
+                <div className="status-img row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <i className={thumbClasses.join(" ")}></i>
+                        <img src={imgSrc} />
                     </div>
                 </div>
-                <div className="row middle-xs center-xs">
+                <div className="status-text row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <span>Pokémon Go is currently</span>
+                        <span>Pokémon GO is {currently}.</span>
                     </div>
                 </div>
-                <div className="status-line row middle-xs center-xs">
+                <div className="status-date row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <span>{currently}</span>
+                        <Time value={status.lastChecked} format="MMM DD, h:mm a" />
                     </div>
                 </div>
-                <div className="row middle-xs center-xs">
-                    <div className="col-xs-12">
-                        <span>as of <Time value={status.lastChecked} format="MMM DD, h:mm a" /></span>
-                    </div>
-                </div>
-                <div className="row middle-xs center-xs">
+                <div className="row middle-xs center-xs status-refresh">
                     <div className="col-xs-12">
                         <button onClick={this.onClickRefresh}><i className="fa fa-refresh"></i></button>
                     </div>
