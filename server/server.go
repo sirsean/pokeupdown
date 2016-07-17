@@ -41,6 +41,7 @@ func apiStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-transform,public,max-age=30,s-maxage=30")
 	payload, _ := json.Marshal(response)
 	w.Write(payload)
 }
