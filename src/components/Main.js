@@ -59,8 +59,25 @@ const Status = React.createClass({
         let fastRatio = numFast / numDurations;
         let slowRatio = numSlow / numDurations;
         let downRatio = numDown / numDurations;
+
+        let thumbClasses = ["thumb", "fa", "fa-6"];
+        if (fastRatio > 0.75) {
+            thumbClasses.push("fa-thumbs-up");
+            thumbClasses.push("fast");
+        } else if (downRatio > 0.4) {
+            thumbClasses.push("fa-thumbs-down");
+            thumbClasses.push("down");
+        } else {
+            thumbClasses.push("fa-thumbs-up");
+            thumbClasses.push("slow");
+        }
         return (
             <div>
+                <div className="thumb-row row middle-xs center-xs">
+                    <div className="col-xs-12">
+                        <i className={thumbClasses.join(" ")}></i>
+                    </div>
+                </div>
                 <div className="durations row">
                     {durations.map(function(d, i) {
                         return <DurationCell key={i} duration={d} />;

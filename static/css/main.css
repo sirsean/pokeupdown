@@ -31,7 +31,7 @@ button {
 }
 
 .duration-cell {
-    height: 100vh;
+    height: 10vh;
     margin: 2px;
 }
 
@@ -45,4 +45,24 @@ button {
 
 .duration-cell.down {
     background-color: #EB421C;
+}
+
+.thumb-row {
+    height: 90vh;
+}
+
+.thumb {
+    font-size: 164pt !important;
+}
+
+.thumb.fast {
+    color: #30AF04;
+}
+
+.thumb.slow {
+    color: #CEF13D;
+}
+
+.thumb.down {
+    color: #EB421C;
 }
