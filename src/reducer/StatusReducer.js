@@ -13,9 +13,16 @@ function loadingStatus(state={}, action) {
 }
 
 function gotStatus(state={}, action) {
+    let status = null;
+    if (action.status != null) {
+        status = {
+            durations: action.status.durations,
+            lastChecked: new Date(action.status.last_checked)
+        };
+    }
     return Object.assign({}, state, {
         loading: false,
-        status: action.status
+        status: status
     });
 }
 

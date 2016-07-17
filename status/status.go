@@ -7,8 +7,11 @@ import (
 	"time"
 )
 
+const MAX_DURATIONS = 100
+
 type lockingStore struct {
 	sync.RWMutex
+	last      time.Time
 	durations []time.Duration
 }
 
@@ -16,9 +19,10 @@ func (s *lockingStore) AddDuration(d time.Duration) {
 	s.Lock()
 	defer s.Unlock()
 	s.durations = append([]time.Duration{d}, s.durations...)
-	if len(s.durations) > 10 {
-		s.durations = s.durations[0:10]
+	if len(s.durations) > MAX_DURATIONS {
+		s.durations = s.durations[0:MAX_DURATIONS]
 	}
+	s.last = time.Now()
 }
 
 var store lockingStore = lockingStore{}
@@ -27,6 +31,12 @@ func Check() {
 	d, _ := httpStatus()
 	log.Println(d)
 	store.AddDuration(d)
+}
+
+func Last() time.Time {
+	store.RLock()
+	defer store.RUnlock()
+	return store.last
 }
 
 func Seconds() []float64 {

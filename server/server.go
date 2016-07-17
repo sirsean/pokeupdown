@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 )
 
 func Serve() {
@@ -29,12 +30,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 type statusResponse struct {
-	Durations []float64 `json:"durations"`
+	LastChecked time.Time `json:"last_checked"`
+	Durations   []float64 `json:"durations"`
 }
 
 func apiStatus(w http.ResponseWriter, r *http.Request) {
 	response := statusResponse{
-		Durations: status.Seconds(),
+		LastChecked: status.Last(),
+		Durations:   status.Seconds(),
 	}
 
 	w.Header().Set("Content-Type", "application/json")

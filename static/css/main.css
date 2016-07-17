@@ -1,8 +1,9 @@
 body {
     margin: 0;
     font-family: "Open Sans", sans-serif;
-    background-color: #E8D78A;
-    color: white;
+    background-color: #EDEDF4;
+    color: black;
+    font-size: 18pt;
 }
 
 hr {
@@ -15,10 +16,10 @@ a {
 }
 
 button {
-    padding: 8px;
-    margin: 4px;
-    font-size: 16pt;
-    background-color: #FDB632;
+    padding: 16px;
+    margin: 8px;
+    font-size: 24pt;
+    background: none;
     border-radius: 5px;
     border: none;
 }
@@ -27,42 +28,25 @@ button {
     margin: 0 !important;
 }
 
-.durations {
-}
-
-.duration-cell {
-    height: 10vh;
-    margin: 2px;
-}
-
-.duration-cell.fast {
-    background-color: #30AF04;
-}
-
-.duration-cell.slow {
-    background-color: #CEF13D;
-}
-
-.duration-cell.down {
-    background-color: #EB421C;
-}
-
-.thumb-row {
-    height: 90vh;
-}
-
 .thumb {
     font-size: 164pt !important;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.thumb.fast {
-    color: #30AF04;
+.thumb.up {
+    color: #31D83A;
 }
 
 .thumb.slow {
-    color: #CEF13D;
+    color: #FCBA04;
 }
 
 .thumb.down {
-    color: #EB421C;
+    color: #B3001B;
+}
+
+.status-line {
+    font-size: 36pt;
+    font-weight: bold;
 }

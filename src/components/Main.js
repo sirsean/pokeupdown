@@ -1,87 +1,113 @@
 import React from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 import {connect} from "react-redux";
+var Actions = require("../actions/Actions.js");
 
-const Loading = React.createClass({
-    mixins: [PureRenderMixin],
-    render: function() {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        );
-    }
-});
-
-const DurationCell = React.createClass({
-    mixins: [PureRenderMixin],
-    render: function() {
-        let d = this.props.duration;
-        let classes = ["duration-cell", "col-xs"];
+function ratios(durations) {
+    let numFast = 0;
+    let numSlow = 0;
+    let numDown = 0;
+    durations.forEach(function(d) {
         if (d < 0.8) {
-            classes.push("fast");
+            numFast++;
         } else if (d < 3) {
-            classes.push("slow");
+            numSlow++;
         } else {
-            classes.push("down");
+            numDown++;
         }
-        return (
-            <div className={classes.join(" ")}></div>
-        );
+    });
+    let numDurations = durations.length;
+    let fastRatio = numFast / numDurations;
+    let slowRatio = numSlow / numDurations;
+    let downRatio = numDown / numDurations;
+
+    return [
+        numFast / numDurations,
+        numSlow / numDurations,
+        numDown / numDurations
+    ];
+}
+
+function upStreak(durations) {
+    for (let i=0; i < durations.length / 2; i++) {
+        if (durations[i] > 1.2) {
+            return false;
+        }
     }
-});
+    return true;
+}
 
 const Status = React.createClass({
     mixins: [PureRenderMixin],
+    onClickRefresh: function() {
+        Actions.loadStatus();
+    },
     render: function() {
         let status = this.props.status;
-        if (status == null) {
+        if ((status == null) || (!status.durations.length)) {
             return (
                 <div></div>
             );
         }
         let durations = status.durations;
-        durations.reverse();
 
-        let numFast = 0;
-        let numSlow = 0;
-        let numDown = 0;
-        durations.forEach(function(d) {
-            if (d < 0.8) {
-                numFast++;
-            } else if (d < 3) {
-                numSlow++;
-            } else {
-                numDown++;
-            }
-        });
-        let numDurations = durations.length;
-        let fastRatio = numFast / numDurations;
-        let slowRatio = numSlow / numDurations;
-        let downRatio = numDown / numDurations;
+        let currently = null;
 
-        let thumbClasses = ["thumb", "fa", "fa-6"];
-        if (fastRatio > 0.75) {
-            thumbClasses.push("fa-thumbs-up");
-            thumbClasses.push("fast");
-        } else if (downRatio > 0.4) {
-            thumbClasses.push("fa-thumbs-down");
-            thumbClasses.push("down");
+        if (upStreak(durations)) {
+            currently = "up";
         } else {
-            thumbClasses.push("fa-thumbs-up");
-            thumbClasses.push("slow");
+            let [fastRatio, slowRatio, downRatio] = ratios(durations);
+            if (fastRatio > 0.75) {
+                currently = "up";
+            } else if (downRatio > 0.4) {
+                currently = "down";
+            } else {
+                currently = "slow";
+            }
         }
+
+        let thumbClasses = ["thumb", "fa", "fa-6", currently];
+        if (currently == "up") {
+            thumbClasses.push("fa-thumbs-up");
+        } else if (currently == "slow") {
+            thumbClasses.push("fa-thumbs-up");
+        } else if (currently == "down") {
+            thumbClasses.push("fa-thumbs-down");
+        }
+
+        let lastChecked = status.lastChecked.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        });
+
         return (
             <div>
-                <div className="thumb-row row middle-xs center-xs">
+                <div className="row middle-xs center-xs">
                     <div className="col-xs-12">
                         <i className={thumbClasses.join(" ")}></i>
                     </div>
                 </div>
-                <div className="durations row">
-                    {durations.map(function(d, i) {
-                        return <DurationCell key={i} duration={d} />;
-                    })}
+                <div className="row middle-xs center-xs">
+                    <div className="col-xs-12">
+                        <span>Pokemon Go is currently</span>
+                    </div>
+                </div>
+                <div className="status-line row middle-xs center-xs">
+                    <div className="col-xs-12">
+                        <span>{currently}</span>
+                    </div>
+                </div>
+                <div className="row middle-xs center-xs">
+                    <div className="col-xs-12">
+                        <span>as of {lastChecked}</span>
+                    </div>
+                </div>
+                <div className="row middle-xs center-xs">
+                    <div className="col-xs-12">
+                        <button onClick={this.onClickRefresh}><i className="fa fa-refresh"></i></button>
+                    </div>
                 </div>
             </div>
         );
