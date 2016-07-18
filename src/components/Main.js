@@ -93,7 +93,7 @@ const Status = React.createClass({
                 </div>
                 <div className="status-date row middle-xs center-xs">
                     <div className="col-xs-12">
-                        <Time value={status.lastChecked} format="MMM DD, h:mm a" />
+                        <Time value={status.lastChecked} format="MMMM DD, h:mm a" />
                     </div>
                 </div>
                 <div className="row middle-xs center-xs status-refresh">
