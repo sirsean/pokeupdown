@@ -1,6 +1,7 @@
 package status
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -28,8 +29,12 @@ func (s *lockingStore) AddDuration(d time.Duration) {
 var store lockingStore = lockingStore{}
 
 func Check() {
-	d, _ := httpStatus()
-	log.Println(d)
+	d, err := httpStatus()
+	log.Println(d, err)
+	// if there was an error, we don't want to say "they're up" even though the error happened fast
+	if err != nil {
+		d += 10 * time.Second
+	}
 	store.AddDuration(d)
 }
 
@@ -66,5 +71,12 @@ func httpStatus() (time.Duration, error) {
 	if err == nil {
 		resp.Body.Close()
 	}
+	if !isStatusOkay(resp.StatusCode) {
+		err = fmt.Errorf("unsuccessful status code: %v", resp.StatusCode)
+	}
 	return d, err
+}
+
+func isStatusOkay(code int) bool {
+	return (code >= 200) && (code < 300)
 }
