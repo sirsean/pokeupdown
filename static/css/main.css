@@ -31,12 +31,12 @@ button {
 
 .background-up {
     background-color: #4DAD5B;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .background-down {
     background-color: #E3350D;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .status-img img {
