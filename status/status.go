@@ -69,9 +69,9 @@ func httpStatus() (time.Duration, error) {
 	resp, err := http.Get("https://pgorelease.nianticlabs.com/plfe/")
 	d := time.Since(start)
 	if err == nil {
-		resp.Body.Close()
+		defer resp.Body.Close()
 	}
-	if !isStatusOkay(resp.StatusCode) {
+	if resp != nil && !isStatusOkay(resp.StatusCode) {
 		err = fmt.Errorf("unsuccessful status code: %v", resp.StatusCode)
 	}
 	return d, err
